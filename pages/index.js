@@ -1,7 +1,18 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
+import React, { useEffect } from 'react';
+import { useStore } from './_app';
 
 export default function Home() {
+  
+  const [ data, updateData ] = useStore();
+
+  console.log(data);
+
+  useEffect(() => {
+    updateData({...data, age: 60});
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
