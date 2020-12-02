@@ -7,7 +7,7 @@ const store = (initialState) => {
 
   const useData = () => [useContext(StateContext), useContext(UpdateContext)];
 
-  const prodiveData = ({ children }) => {
+  const provideData = ({ children }) => {
     const [state, setState] = useState(initialState);
     
     return (
@@ -17,7 +17,7 @@ const store = (initialState) => {
     )
   }
 
-  return {prodiveData, useData}
+  return {provideData, useData}
 }
 
 export default store;
