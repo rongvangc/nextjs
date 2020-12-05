@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const GET_MENU = gql`
-  query Menu {
+export const HEADER = gql`
+  query Header {
     menuItems(where: {location: PRIMARY}) {
       edges {
         node {
@@ -11,6 +11,11 @@ export const GET_MENU = gql`
           url
         }
       }
+    }
+
+    generalSettings {
+      url
+      title
     }
   }
 `

@@ -1,21 +1,20 @@
 import React from 'react';
-import styles from '../styles/Home.module.css';
-
 import Layout from '../components/layouts/Layout';
+import { useStore } from './_app';
+
+//Component
+import Banner from '../components/HomePage/Banner/Banner';
+import CategoriesList from '../components/HomePage/CategoriesList/CategoriesList';
 
 export default function Home() {
+  const [ store ] = useStore();
+
+  console.log(store);
+
   return (
     <Layout home>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Banner />
+      <CategoriesList />
     </Layout>
   )
 }

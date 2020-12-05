@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Navigation.module.css';
-import { useStore } from '../../../pages/_app';
 
 import { MENU } from '../../../constants';
 
