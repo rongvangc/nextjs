@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Navigation.module.css';
+import Link from 'next/link';
 
 import { MENU } from '../../../constants';
 
@@ -10,18 +11,24 @@ const Navigation = () => {
         <ul>
           {MENU.map(item => (
             <li key={item.name}>
-              <a href={item.path}>{item.name}</a>
+              <Link href={item.path}>{item.name}</Link>
             </li>
           ))}
         </ul>
       </div>
       <div className={styles.User}>
-        <a href="cart">
-          <img className="svg-icon" src="/images/cart.svg" />
-        </a>
-        <a href="account">
-          <img className="svg-icon" src="/images/user.svg" />
-        </a>
+        <ul>
+          <li>
+            <Link href="/cart">
+              <img className="svg-icon" src="/images/cart.svg" />
+            </Link>
+          </li>
+          <li>            
+            <Link href="/account">
+              <img className="svg-icon" src="/images/user.svg" />
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   )

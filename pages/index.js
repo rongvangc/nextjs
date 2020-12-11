@@ -9,7 +9,7 @@ import CategoriesList from '../components/HomePage/CategoriesList/CategoriesList
 export default function Home() {
   const [ store ] = useStore();
 
-  console.log(store);
+  // console.log(store);
 
   return (
     <Layout home>

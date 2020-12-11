@@ -1,0 +1,75 @@
+.ProductCard {
+  margin-bottom: 25px;
+  transition: 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.ProductCard:hover {
+  background-color: #f4f3f4;
+  padding: 7px;
+  border-radius: 15px;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+}
+
+.ProductCardImg {
+  text-align: center;
+  cursor: pointer;
+}
+
+.ProductCardImg img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.ProductCardImg h3 {
+  font-size: 18px;
+  margin: 5px 0 10px;
+}
+
+.CardTools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Amount {
+  display: flex;
+  align-items: center;
+  background-color: #FF614A;
+  border-radius: 10px;
+  padding: 7px 5px;
+}
+
+.Amount span {
+  font-weight: 500;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+  color: white;
+}
+
+.Amount_Add,
+.Amount_Remove,
+.AddToCard {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.Price {
+  display: flex;
+  align-items: center;
+}
+
+.Price span {
+  font-weight: 600;
+  font-size: 20px;
+  /* color: #FF614A; */
+}
+
+.AddToCard {
+  background-color: #FFE4E1;
+  border-radius: 10px;
+  padding: 7px 10px 7px 8px;
+  margin-left: 10px;
+  border: 1px solid #FF614A;
+}

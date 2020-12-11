@@ -15,6 +15,7 @@ const defaultStore = {
 };
 
 let StoreProvide = Store(defaultStore);
+// let StoreProvide Hoặc khai báo rỗng như vậy
 
 export const useStore = StoreProvide.useData;
 

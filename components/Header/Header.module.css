@@ -6,3 +6,7 @@
 .HeaderContainer {
   height: 60px;
 }
+
+.HeaderContainer img {
+  cursor: pointer;
+}

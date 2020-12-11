@@ -1,22 +1,13 @@
 import React from "react";
 import { useStore } from "../../../pages/_app";
-import styles from "./CategoriesList.module.css";
 
 import { Container, Grid } from "@material-ui/core";
 import { Heading } from "../../UI/Heading/Heading";
+import CatBox from '../../../components/UI/CatBox/CatBox';
 
 const CategoriesList = () => {
   const [store] = useStore();
   const { categories } = store;
-
-  const CatBox = ({ title, imgUrl, alt, slug }) => (
-    <a href={`/menu/${slug}`} className={styles.CatBox}>
-      <div className={styles.CatBoxImg}>
-        <img src={imgUrl} alt={alt} />
-      </div>
-      <h4 className={styles.CatBoxHeading}>{title}</h4>
-    </a>
-  );
 
   return (
     <Container>
@@ -24,7 +15,7 @@ const CategoriesList = () => {
         <Grid item lg={12}>
           <Heading>Our Menu</Heading>
         </Grid>
-        <Grid item lg={12} justify="center" alignItems="center">
+        <Grid item lg={12} container justify="center" alignItems="center" direction="row">
           {categories.map((cat) => (
             <CatBox
               key={cat.node.id}
@@ -36,6 +27,7 @@ const CategoriesList = () => {
           ))}
         </Grid>
       </Grid>
+
     </Container>
   );
 };

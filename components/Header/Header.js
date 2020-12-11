@@ -1,7 +1,9 @@
 import React from 'react';
 import { Container, AppBar } from '@material-ui/core';
+import Link from 'next/link';
 import Grid from '@material-ui/core/Grid';
 import styles from './Header.module.css';
+
 import Navigation from './Navigation/Navigation';
 
 const Header = () => {
@@ -10,9 +12,9 @@ const Header = () => {
       <Container>
         <Grid container alignItems="center" className={styles.HeaderContainer}>
           <Grid item lg={3}>
-            <a href="/">
+            <Link href="/">
               <img src="/images/logo.png" alt="logo" />
-            </a>
+            </Link>
           </Grid>
           <Grid item lg={9}>
             <Navigation />

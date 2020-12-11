@@ -4,26 +4,34 @@
   justify-content: flex-end;
 }
 
-.Menu ul {
+.Menu ul,
+.User ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.Menu ul li {
+.Menu ul li,
+.User ul li {
   display: inline-block;
+  cursor: pointer;
 }
 
 .Menu ul li a {
   font-size: 18px;
   font-weight: 500;
   padding: 5px 25px;
+  transition: 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.Menu ul li:hover a {
+  color: #FF614A;
 }
 
 .User {
   padding-top: 5px;
 }
 
-.User a {
+.User ul li {
   margin-left: 20px;
 }
