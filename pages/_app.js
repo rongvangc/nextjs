@@ -19,7 +19,7 @@ let StoreProvide = Store(defaultStore);
 
 export const useStore = StoreProvide.useData;
 
-export default function MyApp({ Component, pageProps, categories }) {
+const MyApp = ({ Component, pageProps, categories }) => {
   const theme = createMuiTheme({
     overrides: {
       MuiScopedCssBaseline: {
@@ -77,3 +77,15 @@ MyApp.getInitialProps = async () => {
     categories: data.productCategories.edges
   }
 }
+
+export default MyApp
+
+// MyApp.getInitialProps = async () => {
+//   const { data } = await client.query({
+//     query: CATEGORIES,
+//   });
+
+//   return {
+//     categories: data.productCategories.edges
+//   }
+// }
