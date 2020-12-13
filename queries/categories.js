@@ -5,19 +5,33 @@ export const CATEGORIES = gql`
     productCategories {
       edges {
         node {
-          image {
-            title(format: RENDERED)
-            uri
-            sourceUrl(size: LARGE)
-          }
+          databaseId
+          id
           name
           slug
           uri
-          id
-          databaseId
+          image {
+            sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
+          }
         }
       }
     }
+    # productCategories {
+    #   edges {
+    #     node {
+    #       image {
+    #         title(format: RENDERED)
+    #         uri
+    #         sourceUrl(size: LARGE)
+    #       }
+    #       name
+    #       slug
+    #       uri
+    #       id
+    #       databaseId
+    #     }
+    #   }
+    # }
   }
 `
 

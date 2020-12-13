@@ -16,7 +16,7 @@ const CategoriesList = () => {
           <Heading>Our Menu</Heading>
         </Grid>
         <Grid item lg={12} container justify="center" alignItems="center" direction="row">
-          {categories.map((cat) => (
+          {categories?.map((cat) => (
             <CatBox
               key={cat.node.id}
               title={cat.node.name}

@@ -11,9 +11,7 @@ const defaultOptions = {
   }
 }
 
-const cache = new InMemoryCache({
-  resultCaching: false
-});
+const cache = new InMemoryCache();
 
 const link = createHttpLink({
   uri: `${process.env.NEXT_PUBLIC_ENV_WORDPRESS}/graphql`,
@@ -22,7 +20,7 @@ const link = createHttpLink({
 const client = new ApolloClient({
   link,
   cache,
-  defaultOptions
+  // defaultOptions
 });
 
 export default client

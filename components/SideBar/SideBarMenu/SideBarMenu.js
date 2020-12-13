@@ -31,7 +31,7 @@ const SideBarMenu = () => {
 
   return (
     <div className={styles.MenuItems}>
-      {categories.map((cat) => (
+      {categories?.map((cat) => (
         <CatTag
           key={cat.node.id}
           name={cat.node.name}
