@@ -4,6 +4,7 @@ import "../css/main.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from '@material-ui/core';
 import { ApolloProvider } from "@apollo/client";
+import client from '../apollo/client';
 
 import Store from "../context/store";
 
