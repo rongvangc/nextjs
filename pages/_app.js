@@ -4,10 +4,8 @@ import "../css/main.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from '@material-ui/core';
 import { ApolloProvider } from "@apollo/client";
-import client from "../apollo/client";
 
 import Store from "../context/store";
-import { CATEGORIES } from '../queries/categories';
 
 const defaultStore = {
   age: 45,
@@ -52,10 +50,6 @@ export default function MyApp({ Component, pageProps, categories }) {
     }
   });
 
-  StoreProvide = Store({
-    categories: categories
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -66,14 +60,4 @@ export default function MyApp({ Component, pageProps, categories }) {
       </ApolloProvider>
     </ThemeProvider>
   );
-}
-
-MyApp.getInitialProps = async () => {
-  const { data } = await client.query({
-    query: CATEGORIES,
-  });
-
-  return {
-    categories: data.productCategories.edges
-  }
 }

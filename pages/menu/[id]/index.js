@@ -37,7 +37,7 @@ const MenuItems = ({ menu, categories }) => {
           </Grid>
           <Grid item lg={9}>
             <Grid container spacing={3}>
-              {menu.products.edges.map(product => (
+              {menu?.products.edges.map(product => (
                 <Grid item lg={4} key={product.node.id}>
                   <ProductCard {...product.node} />
                 </Grid>

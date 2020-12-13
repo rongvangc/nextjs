@@ -11,8 +11,6 @@ import CategoriesList from '../components/HomePage/CategoriesList/CategoriesList
 export default function Home({ categories }) {
   const [ store, updateStore ] = useStore();
 
-  console.log(categories)
-
   useEffect(() => {
     if(!store.categories) {
       updateStore({
