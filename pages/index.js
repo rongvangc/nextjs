@@ -8,6 +8,18 @@ import { CATEGORIES } from '../queries/categories';
 import Banner from '../components/HomePage/Banner/Banner';
 import CategoriesList from '../components/HomePage/CategoriesList/CategoriesList';
 
+export const getStaticProps = async () => {
+  const { data } = await client.query({
+    query: CATEGORIES,
+  });
+
+  return {
+    props: {
+      categories: data.productCategories.edges
+    }
+  }
+}
+
 export default function Home({ categories }) {
   const [ store, updateStore ] = useStore();
 
@@ -27,15 +39,3 @@ export default function Home({ categories }) {
     </Layout>
   )
 }
-
-export const getServerSideProps = async () => {
-  const { data } = await client.query({
-    query: CATEGORIES,
-  });
-
-  return {
-    props: {
-      categories: data.productCategories.edges
-    }
-  }
-};

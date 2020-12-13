@@ -5,6 +5,22 @@ import { Container, Grid } from "@material-ui/core";
 import { PRODUCT } from "../../../queries/product";
 import Layout from "../../../components/layouts/Layout";
 
+export const getServerSideProps = async ({ params }) => {
+  console.log(params);
+  const { data } = await client.query({
+    query: PRODUCT,
+    variables: {
+      catSlug: params.item,
+    },
+  });
+
+  return {
+    props: {
+      itemData: data,
+    },
+  };
+};
+
 const ItemProduct = ({ itemData }) => {
   const { image, name, price, slug, sku, id } = itemData.product;
 
@@ -23,19 +39,3 @@ const ItemProduct = ({ itemData }) => {
 };
 
 export default ItemProduct;
-
-export const getServerSideProps = async ({ params }) => {
-  console.log(params);
-  const { data } = await client.query({
-    query: PRODUCT,
-    variables: {
-      catSlug: params.item,
-    },
-  });
-
-  return {
-    props: {
-      itemData: data,
-    },
-  };
-};

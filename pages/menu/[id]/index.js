@@ -52,53 +52,37 @@ const MenuItems = ({ menu, categories }) => {
 
 export default MenuItems;
 
-export const getServerSideProps = async ({ params }) => {
-  // console.log(params);
+export const getStaticPaths = async () => {
+  console.log('run')
+  const { data } = await client.query({
+    query: CATEGORIES,
+  });
+
+  console.log(data);
+
+  const paths = data.productCategories.edges.map((cat) => ({
+    params: { id: cat.slug },
+  }));
+
+  // return {
+  //   paths: paths,
+  //   fallback: false,
+  // };
+}
+
+export const getStaticProps = async () => {
+
   const { data } = await client.query({
     query: MENU,
     variables: {
       items: 20,
-      catSlug: params.id
+      // catSlug: params.id
     },
-  });
-  
-  const { data: catProduct } = await client.query({
-    query: CATEGORIES,
   });
 
   return {
     props: {
-      menu: data,
-      categories: catProduct.productCategories.edges
+      menu: data
     },
   };
 };
-
-
-// export const getStaticPaths = async () => {
-//   const [store] = useStore();
-
-//   console.log(store);
-
-//   // const paths = countries.map((country) => ({
-//   //   params: { id: country.alpha3Code },
-//   // }));
-
-//   // return {
-//   //   paths,
-//   //   fallback: false,
-//   // };
-// }
-
-// export const getStaticProps = async ({ params }) => {
-//   // const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${params.id}`);
-//   // const country = await res.json();
-
-//   const country = await getCountry(params.id);
-
-//   return {
-//     props: {
-//       country,
-//     },
-//   };
-// }

@@ -9,11 +9,30 @@ import Layout from "../components/layouts/Layout";
 import ProductCard from '../components/UI/ProductCard/ProductCard';
 import SideBar from '../components/SideBar/SideBar';
 
+export const getStaticProps = async () => {
+  const { data } = await client.query({
+    query: MENU,
+    variables: {
+      items: 20,
+    },
+  });
+
+  const { data: catProduct } = await client.query({
+    query: CATEGORIES,
+  }); 
+
+  return {
+    props: {
+      menu: data,
+      categories: catProduct.productCategories.edges
+    },
+  };
+};
+
 const Menu = ({ menu, categories }) => {
   const [ store, updateStore ] = useStore();
 
   useEffect(() => {
-    console.log('run');
     if(!store.categories) {
       updateStore({
         ...store,
@@ -31,7 +50,7 @@ const Menu = ({ menu, categories }) => {
           </Grid>
           <Grid item lg={9}>
             <Grid container spacing={3}>
-              {menu.products.edges.map(product => (
+              {menu?.products.edges.map(product => (
                 <Grid item lg={4} key={product.node.id}>
                   <ProductCard {...product.node} />
                 </Grid>
@@ -45,23 +64,3 @@ const Menu = ({ menu, categories }) => {
 };
 
 export default Menu;
-
-export const getServerSideProps = async () => {
-  const { data } = await client.query({
-    query: MENU,
-    variables: {
-      items: 20,
-    },
-  });
-
-  const { data: catProduct } = await client.query({
-    query: CATEGORIES,
-  });
-
-  return {
-    props: {
-      menu: data,
-      categories: catProduct.productCategories.edges
-    },
-  };
-};
