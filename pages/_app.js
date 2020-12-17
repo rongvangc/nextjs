@@ -18,7 +18,7 @@ let StoreProvide = Store(defaultStore);
 
 export const useStore = StoreProvide.useData;
 
-export default function MyApp({ Component, pageProps, categories }) {
+export default function MyApp({ Component, pageProps }) {
   const theme = createMuiTheme({
     overrides: {
       MuiScopedCssBaseline: {

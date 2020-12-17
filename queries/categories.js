@@ -16,22 +16,6 @@ export const CATEGORIES = gql`
         }
       }
     }
-    # productCategories {
-    #   edges {
-    #     node {
-    #       image {
-    #         title(format: RENDERED)
-    #         uri
-    #         sourceUrl(size: LARGE)
-    #       }
-    #       name
-    #       slug
-    #       uri
-    #       id
-    #       databaseId
-    #     }
-    #   }
-    # }
   }
 `
 

@@ -13,6 +13,7 @@ export const PRODUCT = gql`
         sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
         altText
       }
+      shortDescription(format: RENDERED)
       productCategories {
         edges {
           node {

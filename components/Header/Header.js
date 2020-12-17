@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, AppBar } from '@material-ui/core';
+import { Container, AppBar, Grid } from '@material-ui/core';
 import Link from 'next/link';
-import Grid from '@material-ui/core/Grid';
 import styles from './Header.module.css';
 
 import Navigation from './Navigation/Navigation';

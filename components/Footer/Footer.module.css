@@ -1,0 +1,43 @@
+.FooterContainer {
+  background: #FF614A;
+  border-radius: 15px;
+  padding: 40px 60px;
+  color: white;
+}
+
+.FooterContainer img {
+  width: 180px;
+}
+
+.FooterContainer .Intro {
+  font-size: 16px;
+}
+
+.FooterHeading {
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  margin-top: 0;
+}
+
+.FooterHeading::before {
+  content: "";
+  position: absolute;
+  width: 75px;
+  height: 5px;
+  background-color: #FFDE68;
+  bottom: -5px;
+}
+
+.MenuFooter {
+  list-style: none;
+  padding-left: 15px;
+  margin: 0;
+}
+
+.MenuFooter a {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+}

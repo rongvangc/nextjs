@@ -53,36 +53,38 @@ const MenuItems = ({ menu, categories }) => {
 export default MenuItems;
 
 export const getStaticPaths = async () => {
-  console.log('run')
   const { data } = await client.query({
     query: CATEGORIES,
   });
 
-  console.log(data);
-
   const paths = data.productCategories.edges.map((cat) => ({
-    params: { id: cat.slug },
+    params: { id: cat.node.slug },
   }));
 
-  // return {
-  //   paths: paths,
-  //   fallback: false,
-  // };
+  return {
+    paths: paths,
+    fallback: false,
+  };
 }
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ params }) => {
 
   const { data } = await client.query({
     query: MENU,
     variables: {
       items: 20,
-      // catSlug: params.id
+      catSlug: params.id
     },
   });
 
+  const { data: catProduct } = await client.query({
+    query: CATEGORIES,
+  }); 
+
   return {
     props: {
-      menu: data
+      menu: data,
+      categories: catProduct.productCategories.edges
     },
   };
 };

@@ -10,6 +10,7 @@ import ProductCard from '../components/UI/ProductCard/ProductCard';
 import SideBar from '../components/SideBar/SideBar';
 
 export const getStaticProps = async () => {
+
   const { data } = await client.query({
     query: MENU,
     variables: {
