@@ -1,36 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Layout from '../components/layouts/Layout';
 import { useStore } from './_app';
-import client from '../apollo/client';
+
+//Apollo
+import { useQuery } from '@apollo/client';
 import { CATEGORIES } from '../queries/categories';
+import { initializeApollo } from '../apollo/client';
 
 //Component
 import Banner from '../components/HomePage/Banner/Banner';
 import CategoriesList from '../components/HomePage/CategoriesList/CategoriesList';
 
-export const getStaticProps = async () => {
-  const { data } = await client.query({
-    query: CATEGORIES,
-  });
 
-  return {
-    props: {
-      categories: data.productCategories.edges
-    }
-  }
-}
-
-export default function Home({ categories }) {
+export default function Home() {
   const [ store, updateStore ] = useStore();
-
-  useEffect(() => {
-    if(!store.categories) {
-      updateStore({
-        ...store,
-        categories: categories
-      })
+  const { error, loading } = useQuery(CATEGORIES, {
+    onCompleted: (data) => {
+      if(!store.categories) {
+        updateStore({
+          ...store,
+          categories: data.productCategories.edges
+        })
+      }
     }
-  }, [])
+  })
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
 
   return (
     <Layout home>
@@ -38,4 +34,20 @@ export default function Home({ categories }) {
       <CategoriesList />
     </Layout>
   )
+}
+
+
+export const getStaticProps = async () => {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: CATEGORIES
+  })
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract()
+    },
+    revalidate: 1
+  }
 }

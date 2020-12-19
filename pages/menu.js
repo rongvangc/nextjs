@@ -1,61 +1,58 @@
-import React, { useEffect } from "react";
+import React from "react";
 import client from "../apollo/client";
 import { Container, Grid } from "@material-ui/core";
+import { useStore } from "./_app";
 
-import { useStore } from './_app';
+//Apollo
 import { MENU } from "../queries/category";
-import { CATEGORIES } from '../queries/categories';
+import { CATEGORIES } from "../queries/categories";
+import { useQuery } from "@apollo/client";
+import { initializeApollo } from "../apollo/client";
+
+//Component
 import Layout from "../components/layouts/Layout";
-import ProductCard from '../components/UI/ProductCard/ProductCard';
-import SideBar from '../components/SideBar/SideBar';
+import ProductCard from "../components/UI/ProductCard/ProductCard";
+import SideBar from "../components/SideBar/SideBar";
 
-export const getStaticProps = async () => {
+const Menu = () => {
+  const [ store, updateStore ] = useStore();
+  const { data: dataMenu, error: errorMenu, loading: loadingMenu } = useQuery(
+    MENU,
+    {
+      variables: {
+        items: 20,
+      }
+    }
+  );
 
-  const { data } = await client.query({
-    query: MENU,
-    variables: {
-      items: 20,
+  const { error: errorCat, loading: loadingCat } = useQuery(CATEGORIES, {
+    onCompleted: (data) => {
+      if (!store.categories) {
+        updateStore({
+          ...store,
+          categories: data.productCategories.edges,
+        });
+      }
     },
   });
 
-  const { data: catProduct } = await client.query({
-    query: CATEGORIES,
-  }); 
-
-  return {
-    props: {
-      menu: data,
-      categories: catProduct.productCategories.edges
-    },
-  };
-};
-
-const Menu = ({ menu, categories }) => {
-  const [ store, updateStore ] = useStore();
-
-  useEffect(() => {
-    if(!store.categories) {
-      updateStore({
-        ...store,
-        categories: categories
-      })
-    }
-  }, [])
+  if (errorCat || errorMenu) return `Error! ${error.message}`;
 
   return (
     <Layout title="Menu">
       <Container>
         <Grid container spacing={3}>
           <Grid item lg={3}>
-            <SideBar />
+            {!loadingCat ? <SideBar /> : <p>Loading...</p>}
           </Grid>
           <Grid item lg={9}>
             <Grid container spacing={3}>
-              {menu?.products.edges.map(product => (
-                <Grid item lg={4} key={product.node.id}>
-                  <ProductCard {...product.node} />
-                </Grid>
-              ))}
+              {!loadingMenu &&
+                dataMenu?.products.edges.map((product) => (
+                  <Grid item lg={4} key={product.node.id}>
+                    <ProductCard {...product.node} />
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
         </Grid>
@@ -65,3 +62,25 @@ const Menu = ({ menu, categories }) => {
 };
 
 export default Menu;
+
+export const getStaticProps = async () => {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: CATEGORIES
+  })
+
+  await apolloClient.query({
+    query: MENU,
+    variables: {
+      items: 20
+    }
+  })
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract()
+    },
+    revalidate: 1,
+  }
+}

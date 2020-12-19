@@ -3,12 +3,18 @@ import client from "../../../apollo/client";
 import { Container, Grid, Button } from "@material-ui/core";
 import styles from './Item.module.css';
 
+//Apollo
+import { useQuery } from '@apollo/client';
+import { initializeApollo } from '../../../apollo/client';
 import { PRODUCT } from "../../../queries/product";
+
+//Component
 import Layout from "../../../components/layouts/Layout";
 
 export const getServerSideProps = async ({ params }) => {
+  const apolloClient = initializeApollo();
 
-  const { data } = await client.query({
+  const { data } = await apolloClient.query({
     query: PRODUCT,
     variables: {
       catSlug: params.item,
@@ -38,7 +44,7 @@ const ItemProduct = ({ itemData }) => {
                 <img src={image?.sourceUrl} alt="" />
               </div>
               <div className={styles.ProductDetails}>
-                <div class={styles.Top}>
+                <div className={styles.Top}>
                   <h1 className={styles.Heading}>{name}</h1>
                   <span className={styles.Sku}>Sku: {sku}</span>
                   <p className={styles.Price}>{price}</p>

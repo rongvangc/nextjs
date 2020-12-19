@@ -4,7 +4,7 @@ import "../css/main.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from '@material-ui/core';
 import { ApolloProvider } from "@apollo/client";
-import client from '../apollo/client';
+import { useApollo } from '../apollo/client';
 
 import Store from "../context/store";
 
@@ -51,10 +51,12 @@ export default function MyApp({ Component, pageProps }) {
     }
   });
 
+  const store = useApollo(pageProps.initialApolloState);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ApolloProvider client={client}>
+      <ApolloProvider client={store}>
         <StoreProvide.provideData>
           <Component {...pageProps} />
         </StoreProvide.provideData>
