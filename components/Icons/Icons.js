@@ -32,6 +32,42 @@ export const MenuIcon = () => (
   </SvgIcon>
 );
 
+export const UserIcon = () => (
+  <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path
+      data-name="layer1"
+      d="M46 26c0 6.1-3.4 11.5-7 14.8V44c0 2 1 5.1 11 7a15.5 15.5 0 0 1 12 11H2a13.4 13.4 0 0 1 11-11c10-1.8 12-5 12-7v-3.2c-3.6-3.3-7-8.6-7-14.8v-9.6C18 6 25.4 2 32 2s14 4 14 14.4z"
+      fill="none"
+      stroke="#202020"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    ></path>
+  </SvgIcon>
+);
+
+export const TimeIcon = () => (
+  <SvgIcon viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <path
+      strokeWidth="2"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      stroke="#202020"
+      fill="none"
+      d="M29.375 35.625L16.293 18.707a1.007 1.007 0 0 1 1.414-1.414l16.918 13.082A3.739 3.739 0 0 1 30 36.254a3.914 3.914 0 0 1-.625-.629z"
+      data-name="layer2"
+    ></path>
+    <path
+      strokeWidth="2"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      stroke="#202020"
+      fill="none"
+      d="M10.787 10.787A30 30 0 1 0 32 2v13"
+      data-name="layer1"
+    ></path>
+  </SvgIcon>
+);
+
 export const AddIcon = () => (
   <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
     <path

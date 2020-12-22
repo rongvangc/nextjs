@@ -1,10 +1,8 @@
 import React from "react";
-import client from "../../../apollo/client";
 import { Container, Grid, Button } from "@material-ui/core";
 import styles from './Item.module.css';
 
 //Apollo
-import { useQuery } from '@apollo/client';
 import { initializeApollo } from '../../../apollo/client';
 import { PRODUCT } from "../../../queries/product";
 
@@ -29,8 +27,6 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const ItemProduct = ({ itemData }) => {
-
-  console.log(itemData);
 
   const { image, name, price, slug, sku, id, shortDescription } = itemData.product;
 

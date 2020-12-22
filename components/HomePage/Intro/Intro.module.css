@@ -1,0 +1,38 @@
+.IntroContainer {
+  padding: 20px 150px 30px 40px;
+  width: 100%;
+  height: 100%;
+}
+
+.ImageContainer img {
+  width: 100%;
+}
+
+.IntroContainer h3 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.IntroContainer p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.IntroContainer .Signal {
+  font-size: 18px;
+  position: relative;
+  font-style: italic;
+  text-align: right;
+  margin-top: 80px;
+  display: block;
+}
+
+.IntroContainer .Signal::after {
+  position: absolute;
+  content: "";
+  width: 100px;
+  height: 1px;
+  background: black;
+  right: 55px;
+  top: 45%;
+}

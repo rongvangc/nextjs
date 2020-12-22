@@ -1,5 +1,4 @@
 import React from "react";
-import client from "../apollo/client";
 import { Container, Grid } from "@material-ui/core";
 import { useStore } from "./_app";
 

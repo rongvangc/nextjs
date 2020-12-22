@@ -63,7 +63,6 @@
 .Price span {
   font-weight: 600;
   font-size: 20px;
-  /* color: #FF614A; */
 }
 
 .AddToCard {
@@ -72,4 +71,30 @@
   padding: 7px 10px 7px 8px;
   margin-left: 10px;
   border: 1px solid #FF614A;
+}
+
+.ProductCard:hover .CardToolsFeature {
+  transform: translateY(0) scaleZ(1);
+  opacity: 1;
+}
+
+.CardToolsFeature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(50px) scaleZ(0);
+  opacity: 0;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.CardToolsFeature .TextAddToCart {
+  border: none;
+  height: 45px;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #FF614A;
+  width: 100%;
+  cursor: pointer;
 }

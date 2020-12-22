@@ -1,0 +1,95 @@
+.Spinner {
+  margin-top: 100px;
+  margin: auto;
+}
+
+.ImageContainer,
+.ContentContainer {
+  width: 100%;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ImageContainer img {
+  width: 100%;
+}
+
+.ImageContainer .Author {
+  padding: 5px 15px;
+}
+
+.ImageContainer .Author h3 {
+  margin: 5px 0;
+  font-size: 28px;
+}
+
+.ImageContainer .Author p {
+  margin: 5px 0;
+  font-style: italic;
+}
+
+.Directions {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.Directions .Left,
+.Directions .Right {
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+  padding: 15px;
+  width: calc(50% - 10px);
+}
+
+.Directions .Left {
+  background: #FFDE68;
+}
+
+.Directions .Left ul {
+  padding-left: 30px;
+}
+
+.Directions .Left ul li {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  line-height: 26px;
+}
+
+.Directions .Right {
+  background: #CCE8F1;
+}
+
+.Directions .Right ul {
+  padding: 0;
+  list-style: none;
+}
+
+.Directions .Right ul li {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 26px;
+}
+
+.Directions .Right ul li span {
+  padding: 10px;
+  border-radius: 99%;
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  background-color: #ff614a;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  border: 1px solid #ffde68;
+  color: white;
+}
+
+.ContentContainer {
+  padding: 15px;
+  font-size: 16px;
+  line-height: 26px;
+}

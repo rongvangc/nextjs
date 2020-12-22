@@ -69,3 +69,8 @@
 .Sidebar {
   margin-top: 0;
 }
+
+.Spinner {
+  margin-top: 100px;
+  margin: auto;
+}

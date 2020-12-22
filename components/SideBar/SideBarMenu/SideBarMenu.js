@@ -13,6 +13,7 @@ const SideBarMenu = () => {
   const CatTag = ({ image, name, slug }) => {
 
     let classContainer = styles.CatItemContainer;
+    
     if(router.query.id === slug) {
       classContainer = [styles.CatItemContainer, styles.Active].join(' ');
     }

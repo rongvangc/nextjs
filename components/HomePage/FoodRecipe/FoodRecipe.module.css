@@ -1,0 +1,9 @@
+.FoodRecipe {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.Spinner {
+  margin-top: 100px;
+}

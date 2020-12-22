@@ -6,25 +6,25 @@ import styles from './Item.module.css';
 
 //Apollo
 import { useQuery } from '@apollo/client';
-import { MENU } from '../../../queries/category';
-import { CATEGORIES } from '../../../queries/categories';
+import { FOOD_CATEGORIES } from '../../../queries/foodCategories';
+import { FOOD_RECIPE } from '../../../queries/foodRecipe';
 import { initializeApollo } from '../../../apollo/client';
 
 //Component
 import Layout from "../../../components/layouts/Layout";
-import ProductCard from '../../../components/UI/ProductCard/ProductCard';
-import SideBar from '../../../components/SideBar/SideBar';
+import SideBarFood from "../../../components/SideBar/SideBarFood";
 import { capitalizeFirstLetter } from '../../../utils/utils';
+import RecipeCard from "../../../components/UI/RecipeCard/RecipeCard";
 
 const apolloClient = initializeApollo();
 
-const MenuItems = () => {
+const ItemFoodRecipe = () => {
+  const [ store, updateStore ] = useStore();
+
   const route = useRouter();
 
-  const [ store, updateStore ] = useStore();
-  
-  const { data: dataMenu, error: errorMenu, loading: loadingMenu } = useQuery(
-    MENU,
+  const { data, error: errorFood, loading: loadingFood } = useQuery(
+    FOOD_RECIPE,
     {
       variables: {
         items: 20,
@@ -33,50 +33,48 @@ const MenuItems = () => {
     }
   );
 
-  const { error: errorCat, loading: loadingCat } = useQuery(CATEGORIES, {
+  const { error: errorCat, loading: loadingCat } = useQuery(FOOD_CATEGORIES, {
     onCompleted: (data) => {
-      if (!store.categories) {
+      if (!store.foodCategories) {
         updateStore({
           ...store,
-          categories: data.productCategories.edges,
+          foodCategories: data.categories.edges,
         });
       }
     },
   });
 
-  if (errorCat || errorMenu) return `Error! ${error.message}`;
+  if (errorCat || errorFood) return `Error! ${error.message}`;
 
   return (
-    <Layout title={`Menu - ${capitalizeFirstLetter(route.query.id)}`}>
+    <Layout title={`Foods - ${capitalizeFirstLetter(route.query.id)}`}>
       <Container>
         <Grid container spacing={3}>
           <Grid item lg={3}>
-            {!loadingCat ? <SideBar /> : <p>Loading...</p>}
+            {!loadingCat ? <SideBarFood /> : <p>Loading...</p>}
           </Grid>
-          <Grid item lg={9}>
-            <Grid container spacing={3}>
-              {!loadingMenu ?
-                dataMenu?.products.edges.map((product) => (
-                  <Grid item lg={4} key={product.node.id}>
-                    <ProductCard {...product.node} />
-                  </Grid>
-                )) : <CircularProgress className={styles.Spinner} />}
-            </Grid>
+          <Grid item container lg={9}>
+            {!loadingFood ?
+              data?.posts.edges.map((product) => (
+                <Grid key={product.node.id} item lg={4}>
+                  <RecipeCard {...product.node} />
+                </Grid>
+              )) : <CircularProgress className={styles.Spinner} />}
           </Grid>
         </Grid>
       </Container>
     </Layout>
-  )
-}
+  );
+};
 
-export default MenuItems;
+export default ItemFoodRecipe;
 
 export const getStaticPaths = async () => {
   const { data } = await apolloClient.query({
-    query: CATEGORIES,
+    query: FOOD_CATEGORIES,
   });
 
-  const paths = data.productCategories.edges.map((cat) => ({
+  const paths = data.categories.edges.map((cat) => ({
     params: { id: cat.node.slug },
   }));
 
@@ -89,15 +87,10 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
 
   await apolloClient.query({
-    query: CATEGORIES
-  })
-
-  await apolloClient.query({
-    query: MENU,
+    query: FOOD_CATEGORIES,
     variables: {
-      items: 20,
       catSlug: params.id
-    },
+    }
   })
 
   return {
@@ -107,3 +100,4 @@ export const getStaticProps = async ({ params }) => {
     revalidate: 1,
   }
 }
+

@@ -17,6 +17,15 @@ body {
   width: 24px;
 }
 
+.Section {
+  padding: 50px 0 20px;
+}
+
+.DescriptionHeading {
+  text-align: center;
+  font-size: 16px;
+}
+
 .BannerDot {
   list-style: none;
   bottom: 50px;
