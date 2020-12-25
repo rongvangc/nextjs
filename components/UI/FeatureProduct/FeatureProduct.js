@@ -28,7 +28,7 @@ const FeatureProduct = ({ tab, products, categories, onChangeTab }) => {
               </div>
             ))
           ) : (
-            <CircularProgress className={styles.Spinner} />
+            <CircularProgress className="Spinner" />
           )}
         </div>
       </Grid>

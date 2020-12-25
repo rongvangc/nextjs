@@ -34,7 +34,7 @@ const ItemFoodRecipe = () => {
           <Grid item container spacing={2} lg={12}>
             {foodCategories?.map(foodCat => (
               <Grid item lg={3}>
-                <FoodCatBox {...foodCat.node} />
+                <FoodCatBox key={foodCat.node.id} {...foodCat.node} />
               </Grid>
             ))}
           </Grid>

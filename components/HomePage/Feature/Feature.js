@@ -1,7 +1,5 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
-import { useStore } from "../../../pages/_app";
-import styles from "./Feature.module.css";
 
 //Component
 import FeatureProduct from '../../UI/FeatureProduct/FeatureProduct';

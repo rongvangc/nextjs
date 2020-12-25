@@ -26,6 +26,15 @@ export const FOOD_RECIPE = gql`
               sourceUrl(size: POST_THUMBNAIL)
             }
           }
+          categories {
+            edges {
+              node {
+                id
+                name
+                slug
+              }
+            }
+          }
         }
       }
     }

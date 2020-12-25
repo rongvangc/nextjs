@@ -3,6 +3,14 @@
   margin: auto;
 }
 
+.Heading {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  border-bottom: 1px dashed;
+}
+
 .ImageContainer,
 .ContentContainer {
   width: 100%;
@@ -86,6 +94,7 @@
   margin-right: 5px;
   border: 1px solid #ffde68;
   color: white;
+  padding-bottom: 8px;
 }
 
 .ContentContainer {

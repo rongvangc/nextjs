@@ -23,7 +23,7 @@ const FoodRecipe = ({ foodRecipe }) => {
               <Grid key={recipe.node.id} item lg={3}>
                 <RecipeCard {...recipe.node} />
               </Grid>
-            )) : <CircularProgress className={styles.Spinner} />}
+            )) : <CircularProgress className="Spinner" />}
           </div>
         </Grid>
       </Grid>

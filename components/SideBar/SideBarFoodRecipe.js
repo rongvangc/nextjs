@@ -1,12 +1,13 @@
 import React from "react";
 import SideBarFoodMenu from "./SideBarFoodMenu/SideBarFoodMenu";
+import FoodRecipe from './FoodRecipe/FoodRecipe';
 import { FOOD_CATEGORIES } from "../../queries/foodCategories";
 import { FOOD_RECIPE } from "../../queries/foodRecipe";
 import { useQuery } from "@apollo/client";
 import { CircularProgress } from "@material-ui/core";
 import { useStore } from "../../pages/_app";
 
-const SideBarFood = () => {
+const SideBarFoodRecipe = () => {
   const [store, updateStore] = useStore();
 
   const { loading } = useQuery(FOOD_CATEGORIES, {
@@ -22,15 +23,19 @@ const SideBarFood = () => {
 
   const { data } = useQuery(FOOD_RECIPE, {
     variables: {
-      items: 5,
-    },
+      items: 5
+    }
   });
 
   return loading ? (
     <CircularProgress className="Spinner" />
   ) : (
-    <SideBarFoodMenu />
+    <>
+      <FoodRecipe data={data?.posts.edges} />
+      <SideBarFoodMenu />
+      <img className="img-fluid" src="/images/banner-food.jpg" />
+    </>
   );
 };
 
-export default SideBarFood;
+export default SideBarFoodRecipe;

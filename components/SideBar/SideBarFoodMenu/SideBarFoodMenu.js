@@ -20,17 +20,17 @@ const SideBarFoodMenu = () => {
 
     return (
       <Link href={`/foods/${slug}`} >
-      <div className={classContainer}>
-        <p>{name}</p>
-      </div>
-    </Link>
+        <div className={classContainer}>
+          <p>{name}</p>
+        </div>
+      </Link>
     );
   };
 
   return (
     <div className={styles.MenuItems}>
       {foodCategories?.map((foodCat) => (
-        <CatTag name={foodCat.node.name} slug={foodCat.node.slug} />
+        <CatTag key={foodCat.node.id} name={foodCat.node.name} slug={foodCat.node.slug} />
       ))}
     </div>
   );

@@ -54,13 +54,13 @@ const MenuItems = () => {
             {!loadingCat ? <SideBar /> : <p>Loading...</p>}
           </Grid>
           <Grid item lg={9}>
-            <Grid container spacing={3}>
+            <Grid container item>
               {!loadingMenu ?
                 dataMenu?.products.edges.map((product) => (
                   <Grid item lg={4} key={product.node.id}>
                     <ProductCard {...product.node} />
                   </Grid>
-                )) : <CircularProgress className={styles.Spinner} />}
+                )) : <CircularProgress className="Spinner" />}
             </Grid>
           </Grid>
         </Grid>

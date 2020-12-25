@@ -9,6 +9,7 @@ import { initializeApollo } from "../../../apollo/client";
 
 //Component
 import Layout from "../../../components/layouts/Layout";
+import SideBarFoodRecipe from '../../../components/SideBar/SideBarFoodRecipe';
 
 export const getServerSideProps = async ({ params }) => {
   const apolloClient = initializeApollo();
@@ -58,6 +59,7 @@ const ItemFoodRecipe = ({ itemData }) => {
 
             <div className={styles.Directions}>
               <div className={styles.Left}>
+                <h4 className={styles.Heading}>Ingredients</h4>
                 <ul>
                   {foodRecipe?.ingredients.map((ingredient, i) => (
                     <li key={i}>{ingredient.item}</li>
@@ -66,6 +68,7 @@ const ItemFoodRecipe = ({ itemData }) => {
               </div>
 
               <div className={styles.Right}>
+                <h4 className={styles.Heading}>Directions</h4>
                 <ul>
                   {foodRecipe?.directions.map((direction, i) => (
                     <li key={i}><span>{i + 1}</span>{direction.item}</li>
@@ -75,10 +78,13 @@ const ItemFoodRecipe = ({ itemData }) => {
             </div>
 
             <div className={styles.ContentContainer}>
+              <h4 className={styles.Heading}>Details</h4>
               <div dangerouslySetInnerHTML={{ __html: content }} />
             </div>
           </Grid>
-          <Grid item lg={4}></Grid>
+          <Grid item lg={4}>
+            <SideBarFoodRecipe />
+          </Grid>
         </Grid>
       </Container>
     </Layout>
