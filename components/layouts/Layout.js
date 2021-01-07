@@ -21,7 +21,7 @@ const Layout = ({ title, home, children }) => {
       )}
       <Header />
       
-      <main className={styles.main}>
+      <main onScroll={e => console.log(e)} className={styles.main}>
         {children}
       </main>
       

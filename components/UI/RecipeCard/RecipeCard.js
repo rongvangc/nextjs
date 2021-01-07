@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 const RecipeCard = (props) => {
   const route = useRouter();
-  const { title, featuredImage, foodRecipe, slug } = props;
+  const { title, featuredImage, foodRecipe, slug, lastRef } = props;
 
   let itemPerson = [];
 
@@ -30,9 +30,9 @@ const RecipeCard = (props) => {
 
   return (
     <Link href={route.asPath + "/" + slug}>
-      <div className={styles.RecipeCard}>
+      <div ref={lastRef} className={styles.RecipeCard}>
         <div className={styles.ImageContainer}>
-          <img src={featuredImage.node.sourceUrl} alt="" />
+          <img src={featuredImage?.node.sourceUrl} alt="" />
           <div className={styles.Content}>
             <div className={styles.Item}>{checkPerson()}</div>
             <div className={styles.Item}>

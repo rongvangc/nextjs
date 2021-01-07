@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const MENU = gql`
-  query Menu($items: Int, $catSlug: String) {
-    products(first: $items, where: {category: $catSlug}) {
+  query Menu($items: Int, $after: String, $catSlug: String) {
+    products(first: $items, after: $after, where: {category: $catSlug}) {
       edges {
         node {
           id
@@ -45,6 +45,12 @@ export const MENU = gql`
             price(format: FORMATTED)
           }
         }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
       }
     }
   }

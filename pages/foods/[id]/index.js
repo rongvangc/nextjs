@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useRef, useCallback, useState } from "react";
 import { Container, Grid, CircularProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { useStore } from "../../_app";
-import styles from "./Item.module.css";
 
 //Apollo
 import { useQuery } from "@apollo/client";
@@ -20,18 +19,56 @@ const apolloClient = initializeApollo();
 
 const ItemFoodRecipe = () => {
   const [store, updateStore] = useStore();
-
+  const [loading, setLoading] = useState(false)
   const route = useRouter();
-
-  const { data, error: errorFood, loading: loadingFood } = useQuery(
+  const observer = useRef();
+  
+  const { data, error: errorFood, loading: loadingFood, fetchMore } = useQuery(
     FOOD_RECIPE,
     {
       variables: {
-        items: 20,
+        items: 9,
         catSlug: route.query.id,
-      },
+      }
     }
   );
+
+  const lastBookElementRef = useCallback((node) => {
+    if (loading || !data?.posts.pageInfo.hasNextPage) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log("visible");
+        setLoading(true)
+        {data?.posts.pageInfo.hasNextPage ? setLoading(true) : setLoading(true)}
+        fetchMore({
+          variables: {
+            items: 9,
+            after: data?.posts.pageInfo.endCursor
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (!fetchMoreResult || !prev.posts.pageInfo.hasNextPage ) return prev;
+            // console.log(fetchMoreResult, prev);
+            if (!prev.posts.pageInfo.hasNextPage ) return 
+            return {
+              posts: {
+                __typename: "RootQueryToPostConnection",
+                edges: [
+                  ...prev.posts.edges,
+                  ...fetchMoreResult.posts.edges
+                ],
+                pageInfo: fetchMoreResult.posts.pageInfo
+              }
+            }
+          }
+        })
+        .then(() => setLoading(false))
+      }
+    }, [loading]);
+    if (node) observer.current.observe(node);
+  });
+
+
 
   const { error: errorCat, loading: loadingCat } = useQuery(FOOD_CATEGORIES, {
     onCompleted: (data) => {
@@ -53,17 +90,23 @@ const ItemFoodRecipe = () => {
           <Grid item lg={3}>
             {!loadingCat ? <SideBarFood /> : <p>Loading...</p>}
           </Grid>
-          <Grid item lg={9}>
+          <Grid item lg={9} onScroll={(e) => console.log(e)}>
             <Grid container>
               {!loadingFood ? (
-                data?.posts.edges.map((product) => (
-                  <Grid key={product.node.id} item lg={4}>
-                    <RecipeCard {...product.node} />
-                  </Grid>
-                ))
+                data?.posts.edges.map((product) => {
+                  return (
+                    <Grid key={product.node.id} item lg={4}>
+                      <RecipeCard
+                        lastRef={lastBookElementRef}
+                        {...product.node}
+                      />
+                    </Grid>
+                  );
+                })
               ) : (
                 <CircularProgress className="Spinner" />
               )}
+              {loading && <CircularProgress className="Spinner" />}
             </Grid>
           </Grid>
         </Grid>

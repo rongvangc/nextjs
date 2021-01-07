@@ -64,3 +64,41 @@ body {
 .BannerDot li.slick-active button {
   background: #ff614a;
 }
+
+.LoginForm {
+  border-radius: 10px;
+  padding: 15px 20px;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);;
+}
+
+.LoginForm .MuiFormLabel-root.Mui-focused {
+  color: #484848;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.LoginIcon svg {
+  width: 20px;
+}
+
+.WelcomeHeading {
+  font-size: 32px;
+  text-align: center;
+}
+
+.LoginButton.MuiButton-root {
+  background-color: #f79587;
+  font-weight: 600;
+  color: white;
+  margin-top: 20px;
+  border: none;
+  min-height: 40px;
+}
+
+.LoginButton.MuiButton-root:hover {
+  background-color: #ff614a;
+}
+
+.LoginSpinner.MuiCircularProgress-colorPrimary {
+  color: white;
+}

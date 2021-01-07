@@ -126,3 +126,37 @@ export const AddToCart = () => (
     ></circle>
   </SvgIcon>
 );
+
+export const PasswordIcon = () => (
+  <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <path
+      data-name="layer2"
+      d="M19 30V15A13 13 0 0 1 32 2a13 13 0 0 1 13 13v15"
+      fill="none"
+      stroke="#202020"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    ></path>
+    <path
+      data-name="layer1"
+      fill="none"
+      stroke="#202020"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+      d="M32 41v10"
+    ></path>
+    <rect
+      data-name="layer1"
+      x="10"
+      y="30"
+      width="44"
+      height="32"
+      rx="6"
+      ry="6"
+      fill="none"
+      stroke="#202020"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+    ></rect>
+  </SvgIcon>
+);

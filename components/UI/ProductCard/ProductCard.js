@@ -27,7 +27,7 @@ const ProductCard = (props) => {
   });
 
   return (
-    <div className={styles.ProductCard}>
+    <div className={styles.ProductCard} ref={props.lastRef}>
       <Link href={route.asPath + "/" + props.slug} passHref>
         <ButtonCat />
       </Link>
