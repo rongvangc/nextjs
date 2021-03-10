@@ -5,7 +5,6 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from '@material-ui/core';
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from '../apollo/client';
-import { Provider } from 'next-auth/client'
 
 import Store from "../context/store";
 
@@ -59,9 +58,7 @@ export default function MyApp({ Component, pageProps }) {
       <CssBaseline />
       <ApolloProvider client={store}>
         <StoreProvide.provideData>
-          <Provider session={pageProps.session}>
-            <Component {...pageProps} />
-          </Provider>
+          <Component {...pageProps} />
         </StoreProvide.provideData>
       </ApolloProvider>
     </ThemeProvider>

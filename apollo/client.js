@@ -2,50 +2,56 @@ import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
-  from
+  ApolloLink,
+  from,
+  fromPromise
 } from "@apollo/client";
 import { useMemo } from "react";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import { REFRESH_TOKEN } from '../mutations/refreshToken';
-import { v4 } from 'uuid';
-import { getLocal } from '../utils/utils';
-
-//LINK CONFIG: https://www.apollographql.com/blog/building-a-next-js-app-with-apollo-client-slash-graphql/
+import { REFRESH_TOKEN } from "../mutations/refreshToken";
+import { v4 } from "uuid";
+import { getLocal } from "../utils/utils";
 
 let apolloClient;
-
-const refreshAuthToken = async () => {
-  const refreshToken = getLocal('refreshToken');
-  const client = createApolloClient()
-  // Get refresh token from cookies
-  console.log('.............................................')
-  console.log('refresh auth token with token:')
-  console.log(refreshToken)
-  console.log('.............................................')
-  // Get new auth token from server
-
-  return client.mutate({
-      mutation: REFRESH_TOKEN,
-      variables: {
-        input: {
-          clientMutationId: v4(),
-          jwtRefreshToken: refreshToken
-        }
-      },
-  })
-}
 
 const httpLink = createHttpLink({
   uri: `${process.env.NEXT_PUBLIC_ENV_WORDPRESS}/graphql`,
   credentials: "omit",
 });
 
+const getNewToken = () => {
+  const refreshToken = getLocal("refreshToken");
+  return apolloClient.mutate({
+    mutation: REFRESH_TOKEN,
+    variables: {
+      input: {
+        clientMutationId: v4(),
+        jwtRefreshToken: refreshToken,
+      },
+    },
+  });
+};
+
+// const authMiddleware = new ApolloLink((operation, forward) => {
+//   if (typeof window !== "undefined") {
+//     console.log(operation.getContext().headers.authorization);
+//     const token = getLocal("token");
+//     // add the authorization to the headers
+//     operation.setContext({
+//       headers: {
+//         authorization: token || null,
+//       }
+//     });
+  
+//     return forward(operation);
+//   }
+// })
+
 const authLink = setContext((_, { headers }) => {
   if (typeof window !== "undefined") {
-    // get the authentication token from local storage if it exists
+    console.log('runnnn');
     const token = getLocal("token");
-    // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
@@ -55,44 +61,48 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-const logoutLink = onError(
-  ({ networkError, graphQLErrors, operation, forward }) => {
+const errorLink = onError(({ networkError, graphQLErrors, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
         console.log(err);
         switch (err.extensions.category) {
           case "internal":
-            // error code is set to "internal"
-            // when AuthenticationError thrown in resolver
+            // return fromPromise(
+            //   getNewToken().then((data) => {
+            //     console.log('runnnnnnn');
+            //   }).catch((error) => {
+            //     // Handle token refresh errors e.g clear stored tokens, redirect to login
+            //     console.log(error);
+            //     return;
+            //   })
+            // )
+            const token = getLocal("token");
 
-            // modify the operation context with a new token
+            console.log(token);
 
-            // localStorage.clear();
             const oldHeaders = operation.getContext().headers;
             operation.setContext({
               headers: {
                 ...oldHeaders,
-                authorization: refreshAuthToken(),
+                authorization: "",
               },
             });
             // retry the request, returning the new observable
             return forward(operation);
-
-          case "user":
-            return;
-          default:
-            break;
         }
       }
     }
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+
+    if (networkError) {
+      console.log(`[Network error]: ${networkError}`);
+    }
   }
 );
 
 const createApolloClient = () => {
   return new ApolloClient({
-    ssrMode: typeof window === "undefined", // set to true for SSR
-    link: from([logoutLink, authLink, httpLink]),
+    ssrMode: typeof window === "undefined",
+    link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
   });
 };

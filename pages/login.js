@@ -29,7 +29,7 @@ const Login = () => {
       console.log("LOGIN SUCCESS");
       if(data.login) {
         setLocal('token', data.login.authToken);
-        setLocal('refreshToken', data.login.user.jwtRefreshToken);
+        setLocal('refreshToken', data.login.refreshToken);
         route.push(PATHS.HOME);
       }
     },
