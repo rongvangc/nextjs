@@ -2,55 +2,23 @@ import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
-  ApolloLink,
   from,
-  fromPromise
+  fromPromise,
 } from "@apollo/client";
 import { useMemo } from "react";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { REFRESH_TOKEN } from "../mutations/refreshToken";
 import { v4 } from "uuid";
-import { getLocal } from "../utils/utils";
+import { getLocal, setLocal } from "../utils/utils";
+import fetch from "node-fetch";
 
 let apolloClient;
 
-const httpLink = createHttpLink({
-  uri: `${process.env.NEXT_PUBLIC_ENV_WORDPRESS}/graphql`,
-  credentials: "omit",
-});
-
-const getNewToken = () => {
-  const refreshToken = getLocal("refreshToken");
-  return apolloClient.mutate({
-    mutation: REFRESH_TOKEN,
-    variables: {
-      input: {
-        clientMutationId: v4(),
-        jwtRefreshToken: refreshToken,
-      },
-    },
-  });
-};
-
-// const authMiddleware = new ApolloLink((operation, forward) => {
-//   if (typeof window !== "undefined") {
-//     console.log(operation.getContext().headers.authorization);
-//     const token = getLocal("token");
-//     // add the authorization to the headers
-//     operation.setContext({
-//       headers: {
-//         authorization: token || null,
-//       }
-//     });
-  
-//     return forward(operation);
-//   }
-// })
+const isBrowser = typeof window !== "undefined";
 
 const authLink = setContext((_, { headers }) => {
-  if (typeof window !== "undefined") {
-    console.log('runnnn');
+  if (isBrowser) {
     const token = getLocal("token");
     return {
       headers: {
@@ -61,34 +29,71 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-const errorLink = onError(({ networkError, graphQLErrors, operation, forward }) => {
+const getNewToken = () => {
+  const refreshToken = getLocal("refreshToken");
+
+  const query = `
+    mutation refreshJwtAuthToken($input: RefreshJwtAuthTokenInput!) {
+      refreshJwtAuthToken(input: $input) {
+        authToken
+      }
+    }
+  `;
+
+  return fetch(`${process.env.NEXT_PUBLIC_ENV_WORDPRESS}/graphql`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables: {
+        input: {
+          clientMutationId: v4(),
+          jwtRefreshToken: refreshToken || ``,
+        },
+      },
+    }),
+  })
+    .then((res) => res.json()) // expecting a json response
+    .then((json) => {
+      console.log(json);
+      const accessToken = json.data.refreshJwtAuthToken.authToken;
+      return accessToken;
+    })
+    .catch((err) => console.log(err));
+};
+
+const errorLink = onError(
+  ({ networkError, graphQLErrors, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
         console.log(err);
         switch (err.extensions.category) {
           case "internal":
-            // return fromPromise(
-            //   getNewToken().then((data) => {
-            //     console.log('runnnnnnn');
-            //   }).catch((error) => {
-            //     // Handle token refresh errors e.g clear stored tokens, redirect to login
-            //     console.log(error);
-            //     return;
-            //   })
-            // )
-            const token = getLocal("token");
+            return fromPromise(
+              getNewToken().catch((error) => {
+                // Handle token refresh errors e.g clear stored tokens, redirect to login
+                return;
+              })
+            )
+              .filter((value) => Boolean(value))
+              .flatMap((accessToken) => {
+                setLocal('token', accessToken)
+                const oldHeaders = operation.getContext().headers;
+                // modify the operation context with a new token
+                operation.setContext({
+                  headers: {
+                    ...oldHeaders,
+                    authorization: `Bearer ${accessToken}`,
+                  },
+                });
 
-            console.log(token);
-
-            const oldHeaders = operation.getContext().headers;
-            operation.setContext({
-              headers: {
-                ...oldHeaders,
-                authorization: "",
-              },
-            });
-            // retry the request, returning the new observable
-            return forward(operation);
+                // retry the request, returning the new observable
+                return forward(operation);
+              });
         }
       }
     }
@@ -99,9 +104,14 @@ const errorLink = onError(({ networkError, graphQLErrors, operation, forward }) 
   }
 );
 
+const httpLink = createHttpLink({
+  uri: `${process.env.NEXT_PUBLIC_ENV_WORDPRESS}/graphql`,
+  credentials: "omit",
+});
+
 const createApolloClient = () => {
   return new ApolloClient({
-    ssrMode: typeof window === "undefined",
+    ssrMode: isBrowser,
     link: from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache(),
   });
