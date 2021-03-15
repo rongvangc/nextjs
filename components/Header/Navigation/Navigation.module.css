@@ -15,6 +15,7 @@
 .User ul li {
   display: inline-block;
   cursor: pointer;
+  position: relative;
 }
 
 .Menu ul li a {
@@ -34,4 +35,72 @@
 
 .User ul li {
   margin-left: 20px;
+}
+
+.MiniDashBoard {
+  position: absolute;
+  right: 0;
+  margin-top: 10px !important;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+  transform-origin: top right;
+  transform: scale3d(0, 0, 0);
+  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.MiniDashBoard::after {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  top: -20px;
+}
+
+/* .MiniDashBoard::before {
+  content: "";
+  position: absolute;
+  border-bottom: 10px solid white;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  right: 10px;
+  top: -10px;
+} */
+
+.User .MiniDashBoard li {
+  margin: 0;
+  transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.User .MiniDashBoard li:hover {
+  background: gainsboro;
+}
+
+.User .MiniDashBoard li:hover a {
+  border-color: white;
+}
+
+.Logout {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background: #ff614a;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.Logout img {
+  filter: contrast(100) invert(1);
+  width: 22px;
+}
+
+.Logout span {
+  padding-left: 10px;
+}
+
+.UserHover:hover .MiniDashBoard {
+  transform: scale3d(1, 1, 1);
 }

@@ -17,6 +17,10 @@ body {
   width: 24px;
 }
 
+.svg-icon-small {
+  width: 20px;
+}
+
 .Section {
   padding: 50px 0 20px;
 }

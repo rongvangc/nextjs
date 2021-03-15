@@ -61,7 +61,7 @@ const ItemFoodRecipe = ({ itemData }) => {
               <div className={styles.Left}>
                 <h4 className={styles.Heading}>Ingredients</h4>
                 <ul>
-                  {foodRecipe?.ingredients.map((ingredient, i) => (
+                  {foodRecipe.ingredients?.map((ingredient, i) => (
                     <li key={i}>{ingredient.item}</li>
                   ))}
                 </ul>
@@ -70,7 +70,7 @@ const ItemFoodRecipe = ({ itemData }) => {
               <div className={styles.Right}>
                 <h4 className={styles.Heading}>Directions</h4>
                 <ul>
-                  {foodRecipe?.directions.map((direction, i) => (
+                  {foodRecipe.directions?.map((direction, i) => (
                     <li key={i}><span>{i + 1}</span>{direction.item}</li>
                   ))}
                 </ul>

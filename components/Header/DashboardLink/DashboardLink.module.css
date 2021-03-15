@@ -1,0 +1,13 @@
+.DashboardLink {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  border-bottom: 1px solid gainsboro;
+  padding: 5px 10px;
+  min-width: 150px;
+}
+
+.DashboardLink span {
+  padding-left: 10px;
+  font-size: 14px;
+}

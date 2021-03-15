@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const FoodCatBox = (props) => {
-  const { name, slug } = props;
+  const { name, slug, icon } = props;
   const route = useRouter();
 
   const ButtonFood = React.forwardRef(({ onClick, href }, ref) => {
@@ -15,6 +15,7 @@ const FoodCatBox = (props) => {
         ref={ref}
         className={styles.FoodCatBox}
       >
+        <img src={icon} alt="" />
         <h4>{name}</h4>
       </div>
     );

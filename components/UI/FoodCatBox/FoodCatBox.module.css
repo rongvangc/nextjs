@@ -1,11 +1,28 @@
 .FoodCatBox {
-  width: 100%;
-  height: 100px;
+  position: relative;
+  background-size: cover;
+  padding-bottom: 70px;
+  z-index: 2;
+  text-align: center;
+  background: aliceblue;
+  padding: 5px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #FFDE68;
-  border: 1px solid #484848;
   cursor: pointer;
+  transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.FoodCatBox:hover {
+  background: #FF614A;
+  color: white;
+}
+
+.FoodCatBox img {
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+
+.FoodCatBox h4 {
+  margin: 10px 0 5px;
 }
