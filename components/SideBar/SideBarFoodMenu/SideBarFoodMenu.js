@@ -11,15 +11,14 @@ const SideBarFoodMenu = () => {
   const router = useRouter();
 
   const CatTag = ({ name, slug }) => {
-
     let classContainer = styles.CatItem;
-    
-    if(router.query.id === slug) {
-      classContainer = [styles.CatItem, styles.Active].join(' ');
+
+    if (router.query.id === slug) {
+      classContainer = [styles.CatItem, styles.Active].join(" ");
     }
 
     return (
-      <Link href={`/foods/${slug}`} >
+      <Link href={`/foods/${slug}`}>
         <div className={classContainer}>
           <p>{name}</p>
         </div>
@@ -30,7 +29,11 @@ const SideBarFoodMenu = () => {
   return (
     <div className={styles.MenuItems}>
       {foodCategories?.map((foodCat) => (
-        <CatTag key={foodCat.node.id} name={foodCat.node.name} slug={foodCat.node.slug} />
+        <CatTag
+          key={foodCat.node.id}
+          name={foodCat.node.name}
+          slug={foodCat.node.slug}
+        />
       ))}
     </div>
   );

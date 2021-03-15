@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from "./RecipeCard.module.css";
 import { UserIcon, TimeIcon } from "../../Icons/Icons";
 import Link from 'next/link';
@@ -6,12 +7,18 @@ import { useRouter } from "next/router";
 
 const RecipeCard = (props) => {
   const route = useRouter();
-  const { title, featuredImage, foodRecipe, slug, lastRef } = props;
+  const { title, featuredImage, foodRecipe, slug, lastRef, categories, prefixUrl, activeCat } = props;
 
   let itemPerson = [];
 
   for (let index = 0; index < foodRecipe.person; index++) {
     itemPerson.push(index);
+  }
+
+  let categoriesList = '';
+
+  if(activeCat && categories) {
+    categoriesList = categories?.edges[0].node.slug + '/'
   }
 
   const checkPerson = () => {
@@ -29,7 +36,7 @@ const RecipeCard = (props) => {
   };
 
   return (
-    <Link href={route.asPath + "/" + slug}>
+    <Link href={route.asPath + prefixUrl + "/" + categoriesList + slug}>
       <div ref={lastRef} className={styles.RecipeCard}>
         <div className={styles.ImageContainer}>
           <img src={featuredImage?.node.sourceUrl} alt="" />
@@ -46,6 +53,16 @@ const RecipeCard = (props) => {
       </div>
     </Link>
   );
+};
+
+RecipeCard.propTypes = {
+  prefixUrl: PropTypes.string,
+  activeCat: PropTypes.bool
+};
+
+RecipeCard.defaultProps = {
+  prefixUrl: '',
+  activeCat: false
 };
 
 export default RecipeCard;

@@ -11,7 +11,7 @@ import { initializeApollo } from '../apollo/client';
 import Layout from "../components/layouts/Layout";
 import FoodCatBox from '../components/UI/FoodCatBox/FoodCatBox';
 
-const ItemFoodRecipe = () => {
+const Foods = () => {
   const [ store, updateStore ] = useStore();
   const { foodCategories } = store;
   const { error } = useQuery(FOOD_CATEGORIES, {
@@ -33,8 +33,8 @@ const ItemFoodRecipe = () => {
         <Grid container spacing={3}>
           <Grid item container spacing={2} lg={12}>
             {foodCategories?.map(foodCat => (
-              <Grid item lg={3}>
-                <FoodCatBox key={foodCat.node.id} {...foodCat.node} />
+              <Grid key={foodCat.node.id} item lg={3}>
+                <FoodCatBox {...foodCat.node} />
               </Grid>
             ))}
           </Grid>
@@ -44,7 +44,7 @@ const ItemFoodRecipe = () => {
   );
 };
 
-export default ItemFoodRecipe;
+export default Foods;
 
 export const getStaticProps = async () => {
   const apolloClient = initializeApollo();

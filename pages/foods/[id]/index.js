@@ -68,8 +68,6 @@ const ItemFoodRecipe = () => {
     if (node) observer.current.observe(node);
   });
 
-
-
   const { error: errorCat, loading: loadingCat } = useQuery(FOOD_CATEGORIES, {
     onCompleted: (data) => {
       if (!store.foodCategories) {

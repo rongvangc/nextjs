@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ProductCard.module.css";
+import PropTypes from 'prop-types';
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -11,6 +12,12 @@ import {
 
 const ProductCard = (props) => {
   const route = useRouter();
+
+  let categoriesList = '';
+
+  if(props.activeCat && props.productCategories) {
+    categoriesList = props.productCategories?.edges[0].node.slug + '/'
+  }
 
   const ButtonCat = React.forwardRef(({ onClick, href }, ref) => {
     return (
@@ -28,7 +35,7 @@ const ProductCard = (props) => {
 
   return (
     <div className={styles.ProductCard} ref={props.lastRef}>
-      <Link href={route.asPath + "/" + props.slug} passHref>
+      <Link href={route.asPath + props.prefixUrl + '/' + categoriesList + props.slug} passHref>
         <ButtonCat />
       </Link>
       {!props.feature ? (
@@ -62,6 +69,16 @@ const ProductCard = (props) => {
       )}
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  prefixUrl: PropTypes.string,
+  activeCat: PropTypes.bool
+};
+
+ProductCard.defaultProps = {
+  prefixUrl: '',
+  activeCat: false
 };
 
 export default ProductCard;

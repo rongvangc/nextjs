@@ -4,11 +4,11 @@ import {
   createHttpLink,
   from,
   fromPromise,
+  makeVar
 } from "@apollo/client";
 import { useMemo } from "react";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
-import { REFRESH_TOKEN } from "../mutations/refreshToken";
 import { v4 } from "uuid";
 import { getLocal, setLocal } from "../utils/utils";
 import fetch from "node-fetch";
@@ -16,6 +16,11 @@ import fetch from "node-fetch";
 let apolloClient;
 
 const isBrowser = typeof window !== "undefined";
+
+export const AuthVar = makeVar({
+  token: null,
+  refreshToken: null
+})
 
 const authLink = setContext((_, { headers }) => {
   if (isBrowser) {

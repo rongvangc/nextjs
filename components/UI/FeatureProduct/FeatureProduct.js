@@ -11,7 +11,7 @@ const FeatureProduct = ({ tab, products, categories, onChangeTab }) => {
           {categories?.map((cat) => (
             <button
               key={cat.node.id}
-              className={tab === cat.node.slug ? styles.Active : ''}
+              className={tab === cat.node.slug ? styles.Active : ""}
               onClick={() => onChangeTab(cat.node.slug)}
             >
               {cat.node.name}
@@ -24,7 +24,12 @@ const FeatureProduct = ({ tab, products, categories, onChangeTab }) => {
           {products ? (
             products?.map((product) => (
               <div key={product.node.id} className={styles.Item}>
-                <ProductCard feature {...product.node} />
+                <ProductCard
+                  {...product.node}
+                  feature
+                  prefixUrl="menu"
+                  activeCat
+                />
               </div>
             ))
           ) : (

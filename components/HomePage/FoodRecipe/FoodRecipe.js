@@ -21,7 +21,7 @@ const FoodRecipe = ({ foodRecipe }) => {
           <div className={styles.FoodRecipe}>
             {foodRecipe ? foodRecipe.map(recipe => (
               <Grid key={recipe.node.id} item lg={3}>
-                <RecipeCard {...recipe.node} />
+                <RecipeCard {...recipe.node} prefixUrl="foods" activeCat />
               </Grid>
             )) : <CircularProgress className="Spinner" />}
           </div>
